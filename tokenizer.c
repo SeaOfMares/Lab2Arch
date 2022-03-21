@@ -6,7 +6,7 @@
 int tokenizerSize(char * str,char deli){
     int count = 2;
     int i = 0;
-    while(str[i] != NULL){
+    while(str[i] != '\0'){
         if(str[i] == deli) count++;
         ++i;
     }
@@ -22,7 +22,7 @@ char* split_str(char*str,int start,int end){
         new_str[i-start] = str[i];
         ++i;
     }
-    new_str[i] = NULL;
+    new_str[i] = '\0';
     return new_str;
 }
 /* Returns a freshly allocated zero-terminated vector of freshly allocated

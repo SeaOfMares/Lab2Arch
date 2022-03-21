@@ -11,13 +11,9 @@ populate: populate.o
 populate.o: populate.c
 	$(CC) $(CFLAGS) populate.c -o populate.o
 
-ifeq ($(USE_TOKENIZER),true)
-riscv: memory.o $(CUSTOM_TOKENIZER).o riscv.o
-	$(CC) riscv.o memory.o $(CUSTOM_TOKENIZER).o -o riscv
-else
-riscv: memory.o riscv.o
-	$(CC) riscv.o memory.o -o riscv
-endif
+riscv: memory.o tokenizer.o riscv.o
+	$(CC) riscv.o memory.o tokenizer.o -o riscv
+
 
 riscv.o: riscv.c
 	$(CC) $(CFLAGS) riscv.c -o riscv.o
@@ -25,10 +21,8 @@ riscv.o: riscv.c
 memory.o: memory.c
 	$(CC) $(CFLAGS) memory.c -o memory.o
 
-ifeq ($(USE_TOKENIZER),true)
-$(CUSTOM_TOKENIZER).o: $(CUSTOM_TOKENIZER).c
-	$(CC) $(CFLAGS) $(CUSTOM_TOKENIZER).c -o $(CUSTOM_TOKENIZER).o
-endif
+tokenizer.o: tokenizer.c
+	$(CC) $(CFLAGS) tokenizer.c -o tokenizer.o
 
 clean :
-	rm riscv.o populate.o memory.o $(CUSTOM_TOKENIZER).o riscv populate mem.txt
+	rm riscv.o populate.o memory.o tokenizer.o riscv populate mem.txt
